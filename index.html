@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SijilSiap</title>
+<style>
+:root{--red:#b8172f;--red2:#e52d48;--deep:#57101d;--pink:#fff0f2;--ink:#211a1c;--muted:#75696b;--line:#f0dadd;--paper:#fff;--bg:#fff8f8;--green:#176b4c;--shadow:0 18px 45px #6e17201a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 88% 0%,#ffe4e8 0,transparent 32%),linear-gradient(180deg,#fff9f9,#fff 60%);font-family:Inter,"Aptos","Segoe UI",Arial,sans-serif;color:var(--ink)}
+header{background:linear-gradient(115deg,#741020,#b8172f 54%,#ed4358);color:#fff;padding:24px max(22px,calc((100vw - 1240px)/2));position:relative;overflow:hidden}
+header:after{content:"";position:absolute;width:290px;height:290px;border:1px solid #ffffff26;border-radius:50%;right:5%;top:-180px;box-shadow:0 0 0 28px #ffffff0d,0 0 0 56px #ffffff09}
+.brand{display:flex;gap:14px;align-items:center;position:relative;z-index:1}.brandmark{width:48px;height:48px;border:1px solid #ffffff82;border-radius:15px;display:grid;place-items:center;background:#ffffff17;font-size:24px;font-weight:900;box-shadow:inset 0 1px #ffffff40}
+h1{font-size:clamp(24px,4vw,34px);line-height:1.02;margin:0;letter-spacing:-1.2px;font-weight:900}.brand p{margin:6px 0 0;color:#ffe5e8;font-size:13px}
+.headtag{margin-left:auto;border:1px solid #ffffff6b;background:#ffffff17;border-radius:999px;padding:9px 13px;font-size:12px;font-weight:700;white-space:nowrap}
+main{max-width:1240px;margin:26px auto 36px;padding:0 20px}.intro{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:0 2px 18px}.intro h2{margin:0;font-size:21px;letter-spacing:-.5px}.intro p{color:var(--muted);margin:6px 0 0;font-size:13px}.steps{color:var(--red);font-size:12px;font-weight:800;white-space:nowrap}
+.layout{display:grid;grid-template-columns:minmax(0,1.18fr) minmax(330px,.82fr);gap:18px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}.cardhead{padding:16px 18px;border-bottom:1px solid #f5e6e8;display:flex;align-items:center;gap:11px}.num{width:28px;height:28px;display:grid;place-items:center;background:var(--pink);color:var(--red);font-weight:900;border-radius:9px;font-size:13px}.cardhead h3{font-size:15px;margin:0;font-weight:850}.cardhead small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.body{padding:16px 18px}
+.drop{border:1.5px dashed #e6a4ad;border-radius:14px;background:linear-gradient(135deg,#fff8f9,#fff);min-height:112px;display:grid;place-items:center;text-align:center;padding:16px;cursor:pointer;transition:.2s}.drop:hover,.drop.over{background:#fff0f2;border-color:var(--red)}.drop strong{display:block;color:var(--deep);font-size:13px}.drop span{display:block;color:var(--muted);font-size:11px;margin-top:5px}.drop .uploadicon{font-size:23px;margin-bottom:5px}
+input[type=file]{display:none}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:11px}
+button,.button{border:0;border-radius:10px;padding:10px 13px;background:var(--red);color:white;font-weight:800;font-size:12px;cursor:pointer;transition:.16s;box-shadow:0 5px 14px #b8172f20}button:hover,.button:hover{background:#951329;transform:translateY(-1px)}button:disabled{opacity:.48;cursor:not-allowed;transform:none}.btnlight{background:#fff1f3;color:var(--red);box-shadow:none;border:1px solid #f1c7ce}.btnlight:hover{background:#ffe4e8}.btnplain{background:#fff;color:#55484a;border:1px solid var(--line);box-shadow:none}.btnplain:hover{background:#fff7f8;color:var(--red)}
+.status{margin:10px 0 0;color:#706265;font-size:11px;line-height:1.5;min-height:18px}.status.good{color:var(--green)}.status.err{color:#b8172f}
+.previewbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:13px 0 8px;font-size:11px;color:var(--muted)}.canvaswrap{min-height:250px;border-radius:13px;border:1px solid var(--line);background:repeating-conic-gradient(#fff 0% 25%,#fff9fa 0% 50%) 50%/18px 18px;display:grid;place-items:center;overflow:auto;padding:12px}.cert{position:relative;width:min(100%,720px);line-height:0;user-select:none;box-shadow:0 8px 26px #54141d1b}.cert img{display:block;width:100%;height:auto;pointer-events:none}.cert.empty{height:245px;line-height:normal;box-shadow:none;display:grid;place-items:center;color:#947a7e;text-align:center;font-size:13px}
+.marker{position:absolute;transform:translate(-50%,-50%);min-width:114px;max-width:72%;border:2px dashed var(--red);background:#ffffffc9;color:#8b1225;padding:4px 7px;border-radius:7px;text-align:center;font-weight:900;font-size:clamp(10px,1.3vw,16px);line-height:1.12;cursor:move;backdrop-filter:blur(2px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.marker.ic{border-color:#7f3742;color:#713a43;font-size:clamp(8px,1vw,12px);min-width:85px}.marker.active{box-shadow:0 0 0 4px #e52d4830}
+.ocrbox{position:absolute;border:1px solid #2986bb99;background:#3da6e21c;pointer-events:none}.ocrbox span{position:absolute;top:-14px;left:0;font:9px Arial;color:#195d80;white-space:nowrap;background:#fff;padding:1px 3px;max-width:150px;overflow:hidden}
+.fieldtools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:11px}.fieldtools .hint{font-size:11px;color:var(--muted);flex:1;min-width:150px}
+.hr{height:1px;background:#f3e4e6;margin:15px 0}
+label{font-size:11px;color:#57484b;font-weight:800;display:block;margin:0 0 6px}textarea,select{font:inherit;width:100%;border:1px solid #eadadd;border-radius:10px;padding:11px 12px;background:#fff;color:var(--ink);outline:none}textarea:focus,select:focus{border-color:#d14b5f;box-shadow:0 0 0 3px #e52d4814}textarea{resize:vertical;min-height:128px;font-size:12px;line-height:1.55}.helper{font-size:11px;color:var(--muted);line-height:1.45;margin:7px 0 0}.count{font-size:11px;font-weight:800;color:var(--red);margin-left:auto}.tablewrap{margin-top:11px;max-height:160px;overflow:auto;border:1px solid var(--line);border-radius:10px}table{width:100%;border-collapse:collapse;font-size:11px}th{position:sticky;top:0;background:#fff5f6;color:#762033;text-align:left;padding:8px}td{padding:7px 8px;border-top:1px solid #f5e8ea}td:first-child{color:#a89a9c;width:35px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fieldgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.a4card{margin-top:18px;display:none}.a4toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}.a4sheet{position:relative;width:min(100%,900px);aspect-ratio:297/210;margin:auto;background:#fff;border:1px solid #ead9dc;box-shadow:0 12px 35px #52131c1c;overflow:hidden}.a4sheet img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill}.a4label{position:absolute;transform:translate(-50%,-50%);font-weight:700;color:#111;text-align:center;white-space:nowrap;line-height:1.05;text-shadow:0 0 2px #fff,0 0 4px #fff}.a4empty{position:absolute;inset:0;display:grid;place-items:center;color:#9a777d;font-size:13px;text-align:center;padding:20px}.camrow{display:flex;gap:8px;margin-top:9px}.camrow button{flex:1}.printnote{background:#fff8f1;border:1px solid #f3dfc6;border-radius:11px;padding:10px 11px;color:#765221;font-size:11px;line-height:1.45;margin:13px 0}
+.generate{display:flex;gap:9px;margin-top:13px}.generate button{flex:1;padding:13px}.micro{font-size:10px;color:#86797b;line-height:1.5;margin-top:10px}
+footer{max-width:1240px;margin:0 auto 22px;padding:15px 20px;color:#9a7379;text-align:center;font-size:11px;border-top:1px solid #f1dcdf}footer b{color:var(--red);letter-spacing:.2px}
+#progress{height:5px;background:#f8e7ea;border-radius:9px;overflow:hidden;margin-top:9px;display:none}#progress span{height:100%;width:0;display:block;background:linear-gradient(90deg,#b8172f,#f04c63);transition:width .2s}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.headtag{display:none}.intro{align-items:flex-start;flex-direction:column}.canvaswrap{min-height:200px}}
+
+.cropmodal{display:none;position:fixed;inset:0;z-index:1000;background:#2c1118c9;padding:18px;align-items:center;justify-content:center}
+.cropmodal.open{display:flex}.cropdialog{width:min(100%,980px);max-height:94vh;overflow:auto;background:#fff;border-radius:18px;box-shadow:0 25px 80px #0005}
+.crophead{padding:17px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.crophead h3{margin:0;font-size:17px}.crophead p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.cropbody{padding:16px 20px}.cropframe{position:relative;margin:auto;width:max-content;max-width:100%;line-height:0;background:#211a1c;touch-action:none}
+#cropImage{display:block;max-width:min(100%,900px);max-height:64vh;width:auto;height:auto}
+#cropSvg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;touch-action:none}
+#cropPoly{fill:#e52d482b;stroke:#e52d48;stroke-width:5;vector-effect:non-scaling-stroke}
+.cropdot{fill:#fff;stroke:#b8172f;stroke-width:5;vector-effect:non-scaling-stroke;cursor:grab;touch-action:none}
+.croplabel{font:700 28px Arial;fill:#fff;stroke:#741020;stroke-width:5;paint-order:stroke;pointer-events:none}
+.cropactions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:14px}
+@media(max-width:650px){.cropmodal{padding:8px}.crophead,.cropbody{padding:13px}.cropactions button{flex:1}}
+@media print{
+ @page{size:A4 landscape;margin:0}
+ html,body{margin:0!important;padding:0!important;background:white!important}
+ header,main,footer{display:none!important}
+ #printroot{display:block!important}
+ .printpage{width:297mm;height:210mm;position:relative;page-break-after:always;overflow:hidden;background:white}
+ .printpage:last-child{page-break-after:auto}
+ .printtext{position:absolute;transform:translate(-50%,-50%);font-family:Arial,sans-serif;font-weight:700;color:#111;text-align:center;white-space:nowrap;line-height:1.05}
+}
+#printroot{display:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="brandmark">S</div>
+    <div><h1>Sijil<span style="color:#ffd1d8">Siap</span></h1><p>Imbas. Susun. Cetak nama beramai-ramai.</p></div>
+    <div class="headtag">ALAT CETAK SIJIL • BETA</div>
+  </div>
+</header>
+<main>
+  <div class="intro">
+    <div><h2>Tambah nama pada sijil hardcopy</h2><p>Muat naik imbasan untuk kesan wording dan laras kedudukan nama/IC sebelum cetakan pukal.</p></div>
+    <div class="steps">01 TEMPLATE　›　02 SENARAI　›　03 CETAK</div>
+  </div>
+  <div class="layout">
+    <section class="card">
+      <div class="cardhead"><span class="num">01</span><div><h3>Imbas dan kesan sijil</h3><small>Tulisan sijil jadi panduan untuk susun nama dan nombor IC.</small></div></div>
+      <div class="body">
+        <label for="file">Pilih imbasan sijil kosong</label>
+        <div class="drop" id="drop">
+          <div><div class="uploadicon">⬆</div><strong>Tekan untuk pilih gambar sijil</strong><span>PNG atau JPG • sistem cuba luruskan automatik; 4 bucu boleh dilaras manual</span></div>
+        </div>
+        <input type="file" id="file" accept="image/png,image/jpeg,image/webp">
+        <input type="file" id="cameraFile" accept="image/*" capture="environment">
+        <div class="camrow"><button class="btnlight" id="cameraBtn">▣ Ambil gambar dari kamera</button><button class="btnplain" id="galleryBtn">Pilih gambar dari peranti</button></div>
+        <div class="actions">
+          <button id="ocrBtn" disabled>✦ Kesan wording</button>
+          <button class="btnlight" id="suggestBtn" disabled>Auto letak nama & IC</button>
+          <button class="btnplain" id="cropAgainBtn" disabled>✥ Laras 4 bucu</button><button class="btnplain" id="clearBtn" disabled>Buang gambar</button>
+        </div>
+        <div class="status" id="status">Pilih imbasan sijil untuk bermula.</div><div id="progress"><span></span></div>
+        <div class="previewbar"><span>Pratonton susun atur</span><span id="imageInfo">Belum ada gambar</span></div>
+        <div class="canvaswrap">
+          <div class="cert empty" id="cert">Muat naik gambar sijil untuk lihat pratonton di sini.</div>
+        </div>
+        <div class="fieldtools">
+          <button class="btnlight" id="setName" disabled>＋ Tetapkan ruang nama</button>
+          <button class="btnplain" id="setIc" disabled>＋ Tetapkan ruang IC</button>
+          <span class="hint" id="fieldHint">Boleh seret kotak merah pada pratonton untuk laras kedudukan.</span>
+        </div>
+        <div class="hr"></div>
+        <div class="row2">
+          <div><label for="fontSize">Saiz nama</label><select id="fontSize"><option value="22" selected>22 pt</option><option value="21">21 pt</option><option value="20">20 pt</option><option value="19">19 pt</option><option value="18">18 pt</option><option value="17">17 pt</option><option value="16">16 pt</option><option value="15">15 pt</option><option value="14">14 pt</option><option value="13">13 pt</option><option value="12">12 pt</option><option value="11">11 pt</option><option value="10">10 pt</option></select></div>
+          <div><label for="nameFont">Jenis font nama</label><select id="nameFont"><option value="Arial, sans-serif">Arial</option><option value="Calibri, sans-serif">Calibri</option><option value="'Times New Roman', serif">Times New Roman</option><option value="Georgia, serif">Georgia</option><option value="'Trebuchet MS', sans-serif">Trebuchet MS</option><option value="Verdana, sans-serif">Verdana</option></select></div>
+        </div>
+        <div class="fieldgrid">
+          <div><label for="icFontSize">Saiz IC</label><select id="icFontSize"><option value="22">22 pt</option><option value="21">21 pt</option><option value="20">20 pt</option><option value="19">19 pt</option><option value="18">18 pt</option><option value="17">17 pt</option><option value="16">16 pt</option><option value="15">15 pt</option><option value="14" selected>14 pt</option><option value="13">13 pt</option><option value="12">12 pt</option><option value="11">11 pt</option><option value="10">10 pt</option></select></div>
+          <div><label for="icFont">Jenis font IC</label><select id="icFont"><option value="Arial, sans-serif">Arial</option><option value="Calibri, sans-serif">Calibri</option><option value="'Times New Roman', serif">Times New Roman</option><option value="Georgia, serif">Georgia</option><option value="'Trebuchet MS', sans-serif">Trebuchet MS</option><option value="Verdana, sans-serif">Verdana</option></select></div>
+        </div>
+        <div style="margin-top:10px"><label for="paper">Saiz cetakan</label><select id="paper"><option value="a4p" selected>A4 · Potret</option><option value="a4l">A4 · Landskap</option></select></div>
+        <div class="printnote">Cetakan akan menghasilkan <b>nama/IC sahaja</b> pada halaman putih lutsinar. Masukkan sijil hardcopy ke pencetak mengikut arah yang sama seperti cetakan percubaan.</div>
+      </div>
+    </section>
+    <section class="card">
+      <div class="cardhead"><span class="num">02</span><div><h3>Masukkan senarai penerima</h3><small>Tampal dari Excel: lajur pertama nama, lajur kedua nombor IC.</small></div></div>
+      <div class="body">
+        <label for="people">Nama dan nombor IC</label>
+        <textarea id="people" placeholder="Contoh:
+Aisyah binti Ahmad	080512-06-1234
+Kumar a/l Rajan	080821-10-5678"></textarea>
+        <p class="helper">Satu penerima bagi setiap baris. Guna tab/koma, atau jarakkan nombor IC di hujung nama (contoh: SAYA 99072).</p>
+        <div class="actions"><button class="btnplain" id="sampleBtn">Isi contoh</button><button class="btnplain" id="clearPeople">Kosongkan</button><span class="count" id="count">0 penerima</span></div>
+        <div class="tablewrap"><table><thead><tr><th>#</th><th>Nama</th><th>No. IC</th></tr></thead><tbody id="tbody"><tr><td colspan="3" style="text-align:center;color:#9b8d8f;padding:20px">Senarai penerima akan dipaparkan di sini.</td></tr></tbody></table></div>
+        <div class="hr"></div>
+        <div class="cardhead" style="padding:0 0 11px;border:0"><span class="num">03</span><div><h3>Semak dan cetak</h3><small>Setiap penerima satu halaman; pilihan Word boleh diedit sebelum cetak.</small></div></div>
+        <div class="generate"><button id="previewBtn" class="btnlight">Lihat pratonton A4</button><button id="wordBtn" class="btnlight">Muat turun Word</button><button id="printBtn">Cetak sijil pukal　↗</button></div>
+        <div class="micro">Cadangan automatik hanyalah panduan. Semak pratonton dan buat cetakan percubaan atas kertas biasa sebelum menggunakan sijil sebenar.</div>
+      </div>
+    </section>
+  </div>
+<section class="card a4card" id="a4Card">
+  <div class="cardhead"><span class="num">A4</span><div><h3>Pratonton kertas A4</h3><small>Nama dan IC dipaparkan pada kedudukan cetakan sebenar.</small></div></div>
+  <div class="body">
+    <div class="a4toolbar"><button class="btnplain" id="prevPerson">← Sebelum</button><span id="previewCount" class="count">Penerima 0 / 0</span><button class="btnplain" id="nextPerson">Seterusnya →</button><span class="helper">Pilih saiz A4 di tetapan sebelum cetak.</span></div>
+    <div class="a4sheet" id="a4sheet"><div class="a4empty">Tetapkan ruang nama, masukkan senarai penerima,<br>kemudian tekan “Lihat pratonton A4”.</div></div>
+  </div>
+</section>
+</main>
+<footer>Direka untuk memudahkan urusan sijil sekolah <b>©ZulhairiAsmar</b></footer>
+
+<div id="cropModal" class="cropmodal" role="dialog" aria-modal="true" aria-labelledby="cropTitle">
+  <div class="cropdialog">
+    <div class="crophead"><div><h3 id="cropTitle">Luruskan dan potong sijil</h3><p>Seret empat bulatan merah tepat ke bucu kertas sijil. Susunan: atas kiri, atas kanan, bawah kanan, bawah kiri.</p></div><button class="btnplain" id="closeCrop" aria-label="Tutup">✕</button></div>
+    <div class="cropbody">
+      <div class="cropframe" id="cropFrame"><img id="cropImage" alt="Pilih empat bucu sijil"><svg id="cropSvg" viewBox="0 0 1000 1000" preserveAspectRatio="none"><polygon id="cropPoly"></polygon><g id="cropDots"></g></svg></div>
+      <div class="cropactions"><button class="btnplain" id="cropAutoBtn">Cuba kesan bucu automatik</button><button class="btnplain" id="cancelCrop">Kembali</button><button id="applyCrop">Gunakan crop ini</button></div>
+    </div>
+  </div>
+</div>
+<div id="printroot"></div>
+<script>
+const $=s=>document.querySelector(s), file=$('#file'), drop=$('#drop'), cert=$('#cert'), status=$('#status');
+let imageUrl='',sourceUrl='',sourceImage=null,imageObj=null,worker=null,words=[],positions={name:null,ic:null},activeField='name',dragging=null,people=[],previewIndex=0,cropPoints=null,cropDrag=-1;
+const cameraFile=$('#cameraFile');
+function setStatus(msg,type=''){status.textContent=msg;status.className='status '+type}
+function renderImageResult(url,source,isCropped,message){
+  imageUrl=url;imageObj=new Image();
+  imageObj.onload=()=>{
+    cert.className='cert';cert.innerHTML='';const im=document.createElement('img');im.src=imageUrl;im.alt='Sijil yang telah diluruskan';cert.appendChild(im);
+    $('#imageInfo').textContent=imageObj.naturalWidth+' × '+imageObj.naturalHeight+' px';
+    if(source){const ratio=source.ratio||imageObj.naturalWidth/imageObj.naturalHeight;$('#paper').value=ratio>1?'a4l':'a4p'}
+    $('#a4sheet').style.aspectRatio=$('#paper').value==='a4p'?'210/297':'297/210';
+    ['#ocrBtn','#suggestBtn','#clearBtn','#cropAgainBtn','#setName','#setIc'].forEach(x=>$(x).disabled=false);
+    setStatus(message,'good');renderMarkers();renderA4Preview()
+  };
+  imageObj.onerror=()=>setStatus('Imej sijil tidak dapat dipaparkan. Cuba muat naik semula.','err');
+  imageObj.src=url
+}
+function loadImage(f){
+  if(!f)return;
+  if(!f.type.startsWith('image/')){setStatus('Fail ini bukan gambar. Pilih JPG atau PNG.','err');return}
+  if(sourceUrl)URL.revokeObjectURL(sourceUrl);
+  if(imageUrl.startsWith('blob:'))URL.revokeObjectURL(imageUrl);
+  sourceUrl=URL.createObjectURL(f);sourceImage=new Image();words=[];positions={name:null,ic:null};cropPoints=null;
+  sourceImage.onload=async()=>{
+    const sourceRatio=sourceImage.naturalWidth/sourceImage.naturalHeight;
+    renderImageResult(sourceUrl,{ratio:sourceRatio},false,'Gambar sudah dimuat naik. Sistem sedang mengesan bucu dan meluruskan sijil…');
+    setStatus('Gambar sudah dimuat naik. Sistem sedang mengesan bucu dan meluruskan sijil…');
+    try{
+      const cv=await loadOpenCV(),quad=detectCertificateCorners(sourceImage,cv);
+      if(quad){
+        cropPoints=quad.points;const ratio=quad.ratio;
+        const result=warpPerspective(sourceImage,cropPoints,ratio);
+        renderImageResult(result,{ratio},true,'Empat bucu dikesan. Gambar diluruskan dan disesuaikan kepada A4. Semak hasil sebelum teruskan.');
+      }else{
+        renderImageResult(sourceUrl,{ratio:sourceImage.naturalWidth/sourceImage.naturalHeight},false,'Bucu sijil belum dapat dikesan. Tetapkan empat bucu secara manual untuk crop dan luruskan.');
+        openCropEditor(defaultCropPoints());setStatus('Sistem belum yakin dengan bucu sijil. Seret empat titik merah ke bucu kertas.','');
+      }
+    }catch(err){
+      renderImageResult(sourceUrl,{ratio:sourceImage.naturalWidth/sourceImage.naturalHeight},false,'Pengesanan automatik tidak tersedia. Tetapkan empat bucu sijil secara manual.');
+      openCropEditor(defaultCropPoints());setStatus('Auto crop tidak tersedia ketika ini. Seret empat titik merah ke bucu kertas untuk luruskan secara manual.','');
+    }
+  };
+  sourceImage.onerror=()=>setStatus('Gambar tidak dapat dibuka. Cuba pilih fail lain.','err');
+  sourceImage.src=sourceUrl
+}
+function loadOpenCV(){
+  return new Promise((resolve,reject)=>{
+    if(window.cv&&window.cv.Mat){resolve(window.cv);return}
+    const finish=()=>{if(window.cv&&window.cv.Mat)resolve(window.cv);else reject(new Error('OpenCV belum tersedia'))};
+    let script=document.getElementById('opencvScript');
+    if(!script){script=document.createElement('script');script.id='opencvScript';script.src='https://docs.opencv.org/4.10.0/opencv.js';script.onerror=()=>reject(new Error('OpenCV gagal dimuat turun'));document.head.appendChild(script)}
+    const started=Date.now(),timer=setInterval(()=>{if(window.cv&&window.cv.Mat){clearInterval(timer);finish()}else if(Date.now()-started>15000){clearInterval(timer);reject(new Error('OpenCV mengambil masa terlalu lama'))}},100);
+  })
+}
+function orderQuad(points){
+  const cx=points.reduce((s,p)=>s+p.x,0)/4,cy=points.reduce((s,p)=>s+p.y,0)/4;
+  const sorted=[...points].sort((a,b)=>Math.atan2(a.y-cy,a.x-cx)-Math.atan2(b.y-cy,b.x-cx));
+  let start=0;for(let i=1;i<4;i++)if(sorted[i].x+sorted[i].y<sorted[start].x+sorted[start].y)start=i;
+  const ordered=sorted.slice(start).concat(sorted.slice(0,start));
+  if(ordered[1].x<ordered[3].x)return [ordered[0],ordered[3],ordered[2],ordered[1]];
+  return ordered
+}
+function detectCertificateCorners(img,cv){
+  const src=cv.imread(img),scale=Math.min(1,1000/Math.max(src.cols,src.rows)),small=new cv.Mat();
+  cv.resize(src,small,new cv.Size(Math.round(src.cols*scale),Math.round(src.rows*scale)));
+  const gray=new cv.Mat(),blur=new cv.Mat(),edges=new cv.Mat(),kernel=cv.Mat.ones(3,3,cv.CV_8U),contours=new cv.MatVector(),hierarchy=new cv.Mat();
+  try{
+    cv.cvtColor(small,gray,cv.COLOR_RGBA2GRAY);cv.GaussianBlur(gray,blur,new cv.Size(5,5),0);cv.Canny(blur,edges,35,110);cv.dilate(edges,edges,kernel,new cv.Point(-1,-1),2);
+    cv.findContours(edges,contours,hierarchy,cv.RETR_LIST,cv.CHAIN_APPROX_SIMPLE);
+    let best=null,bestArea=0;
+    for(let i=0;i<contours.size();i++){
+      const c=contours.get(i),area=cv.contourArea(c);if(area<small.cols*small.rows*.18){c.delete();continue}
+      const approx=new cv.Mat();cv.approxPolyDP(c,approx,.02*cv.arcLength(c,true),true);
+      if(approx.rows===4&&cv.isContourConvex(approx)){
+        const raw=[];for(let j=0;j<4;j++)raw.push({x:approx.data32S[j*2]/scale,y:approx.data32S[j*2+1]/scale});
+        const q=orderQuad(raw),a=cv.contourArea(approx)/(scale*scale);
+        const top=Math.hypot(q[1].x-q[0].x,q[1].y-q[0].y),bottom=Math.hypot(q[2].x-q[3].x,q[2].y-q[3].y),left=Math.hypot(q[3].x-q[0].x,q[3].y-q[0].y),right=Math.hypot(q[2].x-q[1].x,q[2].y-q[1].y),ratio=((top+bottom)/2)/((left+right)/2);
+        if(a>bestArea&&a<img.naturalWidth*img.naturalHeight*.97&&ratio>.48&&ratio<2.05){bestArea=a;best={points:q,ratio}}
+      }
+      approx.delete();c.delete()
+    }
+    return best
+  }finally{src.delete();small.delete();gray.delete();blur.delete();edges.delete();kernel.delete();contours.delete();hierarchy.delete()}
+}
+function solveLinear(matrix){
+  const n=matrix.length;
+  for(let i=0;i<n;i++){
+    let max=i;for(let r=i+1;r<n;r++)if(Math.abs(matrix[r][i])>Math.abs(matrix[max][i]))max=r;
+    [matrix[i],matrix[max]]=[matrix[max],matrix[i]];
+    const div=matrix[i][i];if(Math.abs(div)<1e-10)throw new Error('Bucu crop bertindih');for(let c=i;c<=n;c++)matrix[i][c]/=div;
+    for(let r=0;r<n;r++)if(r!==i){const factor=matrix[r][i];for(let c=i;c<=n;c++)matrix[r][c]-=factor*matrix[i][c]}
+  }
+  return matrix.map(row=>row[n])
+}
+function warpPerspective(img,points,ratio){
+  const portrait=ratio<=1;$('#paper').value=portrait?'a4p':'a4l';
+  const W=portrait?1000:1414,H=portrait?1414:1000;
+  const dst=[{x:0,y:0},{x:W-1,y:0},{x:W-1,y:H-1},{x:0,y:H-1}],m=[];
+  for(let i=0;i<4;i++){const {x:u,y:v}=dst[i],{x,y}=points[i];m.push([u,v,1,0,0,0,-x*u,-x*v,x]);m.push([0,0,0,u,v,1,-y*u,-y*v,y])}
+  const [a,b,c,d,e,f,g,h]=solveLinear(m),srcCanvas=document.createElement('canvas');srcCanvas.width=img.naturalWidth;srcCanvas.height=img.naturalHeight;
+  const sctx=srcCanvas.getContext('2d',{willReadFrequently:true});sctx.drawImage(img,0,0);const src=sctx.getImageData(0,0,srcCanvas.width,srcCanvas.height),outCanvas=document.createElement('canvas');outCanvas.width=W;outCanvas.height=H;const octx=outCanvas.getContext('2d'),out=octx.createImageData(W,H),sd=src.data,od=out.data;
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const den=g*x+h*y+1;if(Math.abs(den)<1e-9)continue;const sx=(a*x+b*y+c)/den,sy=(d*x+e*y+f)/den;
+    if(sx<0||sy<0||sx>=srcCanvas.width-1||sy>=srcCanvas.height-1)continue;
+    const x0=Math.floor(sx),y0=Math.floor(sy),dx=sx-x0,dy=sy-y0,di=(y*W+x)*4,i00=(y0*srcCanvas.width+x0)*4,i10=i00+4,i01=i00+srcCanvas.width*4,i11=i01+4;
+    for(let k=0;k<3;k++){const top=sd[i00+k]*(1-dx)+sd[i10+k]*dx,bot=sd[i01+k]*(1-dx)+sd[i11+k]*dx;od[di+k]=top*(1-dy)+bot*dy}od[di+3]=255
+  }
+  octx.putImageData(out,0,0);return outCanvas.toDataURL('image/jpeg',.95)
+}
+function defaultCropPoints(){return [{x:sourceImage.naturalWidth*.06,y:sourceImage.naturalHeight*.06},{x:sourceImage.naturalWidth*.94,y:sourceImage.naturalHeight*.06},{x:sourceImage.naturalWidth*.94,y:sourceImage.naturalHeight*.94},{x:sourceImage.naturalWidth*.06,y:sourceImage.naturalHeight*.94}]}
+function openCropEditor(points){cropPoints=points.map(p=>({x:p.x,y:p.y}));$('#cropImage').src=sourceUrl;$('#cropModal').classList.add('open');$('#cropImage').onload=()=>drawCropOverlay();drawCropOverlay()}
+function drawCropOverlay(){if(!cropPoints||!$('#cropImage').naturalWidth)return;const pts=cropPoints.map(p=>({x:p.x/$('#cropImage').naturalWidth*1000,y:p.y/$('#cropImage').naturalHeight*1000}));$('#cropPoly').setAttribute('points',pts.map(p=>p.x+','+p.y).join(' '));$('#cropDots').innerHTML=pts.map((p,i)=>'<circle class="cropdot" data-i="'+i+'" cx="'+p.x+'" cy="'+p.y+'" r="24"></circle><text class="croplabel" x="'+(p.x+15)+'" y="'+(p.y-15)+'">'+(i+1)+'</text>').join('')}
+function closeCrop(){ $('#cropModal').classList.remove('open') }
+$('#cropAgainBtn').onclick=()=>{if(sourceImage)openCropEditor(cropPoints||defaultCropPoints())};
+$('#closeCrop').onclick=closeCrop;$('#cancelCrop').onclick=closeCrop;
+$('#cropDots').addEventListener('pointerdown',e=>{const dot=e.target.closest('.cropdot');if(!dot)return;e.preventDefault();cropDrag=Number(dot.dataset.i);$('#cropSvg').setPointerCapture(e.pointerId)});
+$('#cropSvg').addEventListener('pointermove',e=>{if(cropDrag<0)return;const r=$('#cropSvg').getBoundingClientRect(),x=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),y=Math.max(0,Math.min(1,(e.clientY-r.top)/r.height));cropPoints[cropDrag]={x:x*sourceImage.naturalWidth,y:y*sourceImage.naturalHeight};drawCropOverlay()});
+$('#cropSvg').addEventListener('pointerup',()=>cropDrag=-1);$('#cropSvg').addEventListener('pointercancel',()=>cropDrag=-1);
+$('#cropAutoBtn').onclick=async()=>{try{setStatus('Mengesan bucu sijil…');const cv=await loadOpenCV(),q=detectCertificateCorners(sourceImage,cv);if(!q){setStatus('Bucu automatik belum jelas. Laraskan empat titik merah.','err');return}cropPoints=q.points;drawCropOverlay();setStatus('Empat bucu dikesan. Semak dan tekan “Gunakan crop ini”.','good')}catch(e){setStatus('Pengesanan automatik tidak dapat dimuatkan. Laraskan titik merah secara manual.','err')}};
+$('#applyCrop').onclick=()=>{try{const top=Math.hypot(cropPoints[1].x-cropPoints[0].x,cropPoints[1].y-cropPoints[0].y),bottom=Math.hypot(cropPoints[2].x-cropPoints[3].x,cropPoints[2].y-cropPoints[3].y),left=Math.hypot(cropPoints[3].x-cropPoints[0].x,cropPoints[3].y-cropPoints[0].y),right=Math.hypot(cropPoints[2].x-cropPoints[1].x,cropPoints[2].y-cropPoints[1].y),ratio=(top+bottom)/(left+right);const warped=warpPerspective(sourceImage,cropPoints,ratio);closeCrop();renderImageResult(warped,{ratio},true,'Sijil telah diluruskan dan dipotong ke bingkai A4. Semak pratonton sebelum cetak.')}catch(e){setStatus('Crop tidak berjaya. Pastikan empat titik berada pada bucu sijil.','err')}};
+$('#cropModal').addEventListener('click',e=>{if(e.target===$('#cropModal'))closeCrop()});
+
+drop.addEventListener('click',()=>file.click());$('#galleryBtn').onclick=()=>file.click();$('#cameraBtn').onclick=()=>cameraFile.click();file.addEventListener('change',e=>loadImage(e.target.files[0]));cameraFile.addEventListener('change',e=>loadImage(e.target.files[0]));drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('over')});drop.addEventListener('dragleave',()=>drop.classList.remove('over'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('over');loadImage(e.dataTransfer.files[0])});
+function addMarker(kind,x,y){positions[kind]={x:Math.max(.02,Math.min(.98,x)),y:Math.max(.02,Math.min(.98,y))};activeField=kind;renderMarkers()}
+function renderMarkers(){if(!imageObj)return;cert.querySelectorAll('.marker,.ocrbox').forEach(e=>e.remove());words.forEach(w=>{const d=document.createElement('div');d.className='ocrbox';d.style.left=w.x*100+'%';d.style.top=w.y*100+'%';d.style.width=w.w*100+'%';d.style.height=w.h*100+'%';const s=document.createElement('span');s.textContent=w.text;d.appendChild(s);cert.appendChild(d)});['name','ic'].forEach(k=>{const p=positions[k];if(!p)return;const m=document.createElement('div');m.className='marker '+(k==='ic'?'ic ':'')+(activeField===k?'active':'');m.style.left=p.x*100+'%';m.style.top=p.y*100+'%';m.style.fontSize=parseInt($(k==='name'?'#fontSize':'#icFontSize').value,10)+'pt';m.style.fontFamily=$(k==='name'?'#nameFont':'#icFont').value;m.textContent=k==='name'?(people[0]?.name||'NAMA PENERIMA'):(people[0]?.ic||'NO. IC');m.title='Seret untuk ubah kedudukan';m.dataset.kind=k;m.addEventListener('pointerdown',startDrag);cert.appendChild(m)})}
+function startDrag(e){e.preventDefault();e.stopPropagation();activeField=e.currentTarget.dataset.kind;dragging=e.currentTarget;cert.querySelectorAll('.marker').forEach(m=>m.classList.toggle('active',m===dragging));dragging.setPointerCapture(e.pointerId);dragging.addEventListener('pointermove',moveDrag);dragging.addEventListener('pointerup',endDrag,{once:true});dragging.addEventListener('pointercancel',endDrag,{once:true})}
+function moveDrag(e){if(!dragging||!imageObj)return;const r=cert.getBoundingClientRect(),k=dragging.dataset.kind;positions[k]={x:Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),y:Math.max(0,Math.min(1,(e.clientY-r.top)/r.height))};dragging.style.left=positions[k].x*100+'%';dragging.style.top=positions[k].y*100+'%';renderA4Preview()}
+function endDrag(){if(dragging){dragging.removeEventListener('pointermove',moveDrag);dragging=null}}
+cert.addEventListener('pointerdown',e=>{if(e.target.closest('.marker')||!imageObj)return;const r=cert.getBoundingClientRect();addMarker(activeField,(e.clientX-r.left)/r.width,(e.clientY-r.top)/r.height);setStatus('Kedudukan '+(activeField==='name'?'nama':'IC')+' telah ditetapkan. Seret kotak untuk pelarasan halus.','good');renderA4Preview()});
+$('#setName').onclick=()=>{activeField='name';$('#fieldHint').textContent='Klik pada ruang nama dalam pratonton, kemudian seret kotak untuk laras.';setStatus('Klik ruang nama pada sijil.','good')};
+$('#setIc').onclick=()=>{activeField='ic';$('#fieldHint').textContent='Klik pada ruang IC dalam pratonton, kemudian seret kotak untuk laras.';setStatus('Klik ruang nombor IC pada sijil.','good')};
+$('#clearBtn').onclick=()=>{closeCrop();if(imageUrl.startsWith('blob:'))URL.revokeObjectURL(imageUrl);if(sourceUrl)URL.revokeObjectURL(sourceUrl);imageUrl='';sourceUrl='';sourceImage=null;imageObj=null;cropPoints=null;words=[];positions={name:null,ic:null};file.value='';cameraFile.value='';cert.className='cert empty';cert.innerHTML='Muat naik gambar sijil untuk lihat pratonton di sini.';$('#imageInfo').textContent='Belum ada imbasan';['#ocrBtn','#suggestBtn','#clearBtn','#setName','#setIc'].forEach(x=>$(x).disabled=true);setStatus('Gambar dibuang.');renderA4Preview()};
+async function loadTesseract(){if(window.Tesseract)return;await new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';s.onload=ok;s.onerror=no;document.head.appendChild(s)})}
+$('#ocrBtn').onclick=async()=>{if(!imageObj)return;const btn=$('#ocrBtn');btn.disabled=true;$('#progress').style.display='block';$('#progress span').style.width='2%';setStatus('Sedang membaca tulisan pada sijil. Proses pertama mungkin mengambil sedikit masa…');try{await loadTesseract();if(!worker)worker=await Tesseract.createWorker('eng+msa',1,{langPath:'https://tessdata.projectnaptha.com/4.0.0',logger:m=>{if(m.status==='recognizing text')$('#progress span').style.width=Math.round(m.progress*100)+'%'}});const {data}=await worker.recognize(imageObj);words=(data.words||[]).filter(w=>w.text&&w.confidence>25).map(w=>({text:w.text,x:w.bbox.x0/imageObj.naturalWidth,y:w.bbox.y0/imageObj.naturalHeight,w:(w.bbox.x1-w.bbox.x0)/imageObj.naturalWidth,h:(w.bbox.y1-w.bbox.y0)/imageObj.naturalHeight,confidence:w.confidence}));renderMarkers();$('#suggestBtn').disabled=false;setStatus('Siap membaca '+words.length+' perkataan, termasuk label IC yang dikesan. Kotak biru menunjukkan tulisan pada sijil.','good')}catch(e){setStatus('OCR tidak dapat dimuatkan. Semak sambungan internet atau tetapkan ruang nama/IC dengan klik pada sijil.','err')}finally{btn.disabled=false;setTimeout(()=>$('#progress').style.display='none',700)}};
+$('#suggestBtn').onclick=()=>{if(!words.length){setStatus('Kesan wording dahulu.');return}const groups={};for(const w of words){const key=Math.round(w.y*30)/30;groups[key]??=[];groups[key].push(w)}const rows=Object.values(groups).map(a=>({y:a.reduce((s,w)=>s+w.y+w.h/2,0)/a.length,x0:Math.min(...a.map(w=>w.x)),x1:Math.max(...a.map(w=>w.x+w.w)),text:a.map(w=>w.text).join(' ')}));const cues=['diperakui','diberikan','dianugerahkan','penghargaan','presented','awarded','certified','berjaya','menyertai','telah'];let anchor=rows.find(r=>cues.some(c=>r.text.toLowerCase().includes(c)));let nr=anchor?rows.find(r=>r.y>anchor.y+.015&&r.y<anchor.y+.25&&r.x1-r.x0<.85):null;if(!nr)nr=rows.filter(r=>r.x1-r.x0>.08).sort((a,b)=>Math.abs(a.y-.52)-Math.abs(b.y-.52))[0];if(nr)addMarker('name',.5,Math.min(.9,nr.y+.07));const ir=rows.find(r=>/(\b(ic|kp|mykad)\b|no\.?\s*\/?\s*(kp|ic)|kad\s*(pengenalan|pengenalan diri)|nombor\s*(kp|kad|ic)|k\s*\/?\s*p|identity|identification)/i.test(r.text));if(ir){let ix=ir.x1+.12,iy=ir.y;if(ix>.88){ix=.5;iy=Math.min(.94,ir.y+.055)}addMarker('ic',ix,iy)}activeField='name';renderMarkers();renderA4Preview();setStatus((nr?'Ruang nama dicadangkan. ':'Ruang nama belum jelas. ')+(ir?'Ruang IC turut dicadangkan. ':'Klik “Tetapkan ruang IC”, kemudian klik kedudukannya pada sijil. ')+'Semak pratonton A4.','good')};
+function parsePeople(){
+  const raw=$('#people').value.trim();
+  if(!raw)return[];
+  return raw.split(String.fromCharCode(10)).map(line=>line.replaceAll(String.fromCharCode(13),'').trim()).filter(Boolean).map(line=>{
+    let a=null;
+    if(line.includes(String.fromCharCode(9)))a=line.split(String.fromCharCode(9));
+    else if(line.includes(','))a=line.split(',');
+    else{
+      const cut=line.lastIndexOf(' ');
+      if(cut>0){
+        const tail=line.slice(cut+1).trim();
+        const digits=tail.replaceAll('-','');
+        const numeric=digits.length>=4&&Array.from(digits).every(c=>c>='0'&&c<='9');
+        if(numeric)a=[line.slice(0,cut).trim(),tail];
+      }
+      if(!a)a=[line];
+    }
+    return{name:(a[0]||'').trim(),ic:(a.slice(1).join(' ').replace(/^["']|["']$/g,'').trim())}
+  }).filter(x=>x.name)
+}
+function updatePeople(){people=parsePeople();$('#count').textContent=people.length+' penerima';const tb=$('#tbody');if(!people.length){tb.innerHTML='<tr><td colspan="3" style="text-align:center;color:#9b8d8f;padding:20px">Senarai penerima akan dipaparkan di sini.</td></tr>';renderMarkers();renderA4Preview();return}tb.innerHTML=people.slice(0,120).map((p,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(p.name)+'</td><td>'+esc(p.ic||'—')+'</td></tr>').join('');renderMarkers();renderA4Preview()}
+function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+$('#people').addEventListener('input',updatePeople);$('#sampleBtn').onclick=()=>{$('#people').value='Aisyah binti Ahmad\t080512-06-1234\nKumar a/l Rajan\t080821-10-5678\nNur Iman Sofea\t090214-06-7788';updatePeople()};$('#clearPeople').onclick=()=>{$('#people').value='';updatePeople()};
+
+function renderA4Preview(){const card=$('#a4Card'),sheet=$('#a4sheet');if(!card||!sheet)return;const show=!!imageObj&&people.length>0;card.style.display=show?'block':'none';if(!show)return;previewIndex=Math.max(0,Math.min(previewIndex,people.length-1));sheet.innerHTML='';const bg=document.createElement('img');bg.src=imageUrl;bg.alt='Latar sijil A4';sheet.appendChild(bg);const p=people[previewIndex];if(positions.name){const n=document.createElement('div');n.className='a4label';n.textContent=p.name;n.style.left=positions.name.x*100+'%';n.style.top=positions.name.y*100+'%';n.style.fontSize=parseInt($('#fontSize').value,10)+'pt';n.style.fontFamily=$('#nameFont').value;sheet.appendChild(n)}if(positions.ic&&p.ic){const ic=document.createElement('div');ic.className='a4label';ic.textContent=p.ic;ic.style.left=positions.ic.x*100+'%';ic.style.top=positions.ic.y*100+'%';ic.style.fontSize=parseInt($('#icFontSize').value,10)+'pt';ic.style.fontFamily=$('#icFont').value;sheet.appendChild(ic)}$('#previewCount').textContent='Penerima '+(previewIndex+1)+' / '+people.length}
+$('#previewBtn').onclick=()=>{updatePeople();if(!imageObj){setStatus('Pilih atau ambil gambar sijil dahulu.','err');return}if(!positions.name){setStatus('Tetapkan ruang nama dahulu: tekan butang nama, kemudian klik pada sijil.','err');return}renderA4Preview();$('#a4Card').scrollIntoView({behavior:'smooth',block:'center'})};
+$('#prevPerson').onclick=()=>{if(people.length){previewIndex=(previewIndex-1+people.length)%people.length;renderA4Preview()}};
+$('#nextPerson').onclick=()=>{if(people.length){previewIndex=(previewIndex+1)%people.length;renderA4Preview()}};
+['#fontSize','#icFontSize','#nameFont','#icFont'].forEach(sel=>$(sel).addEventListener('change',()=>{renderMarkers();renderA4Preview()}));$('#paper').addEventListener('change',()=>{const s=$('#a4sheet');s.style.aspectRatio=$('#paper').value==='a4p'?'210/297':'297/210';renderA4Preview()});
+
+function escapeXml(value){return String(value).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&apos;")}
+function loadZipLibrary(){
+  if(window.JSZip)return Promise.resolve(window.JSZip);
+  return new Promise((resolve,reject)=>{
+    let script=document.getElementById('jszipScript');
+    if(script){script.addEventListener('load',()=>resolve(window.JSZip),{once:true});script.addEventListener('error',reject,{once:true});return}
+    script=document.createElement('script');script.id='jszipScript';script.src='https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+    script.onload=()=>window.JSZip?resolve(window.JSZip):reject(new Error('JSZip tidak tersedia'));script.onerror=()=>reject(new Error('Pustaka Word gagal dimuatkan'));document.head.appendChild(script)
+  })
+}
+function makeWordParagraph(text,x,y,fontPt,fontName,pageWidth,pageHeight,pageBreak,spacingBefore){
+  const chars=Array.from(text),units=chars.reduce((n,c)=>n+('MW@#'.includes(c)?0.82:('il.,:;! '.includes(c)?0.32:0.56)),0);
+  const estimatedWidth=Math.min(pageWidth*.9,Math.max(fontPt*20*units,pageWidth*.12));
+  const center=Math.max(estimatedWidth/2,Math.min(pageWidth-estimatedWidth/2,x*pageWidth));
+  const left=Math.max(0,Math.round(center-estimatedWidth/2)),right=Math.max(0,Math.round(pageWidth-center-estimatedWidth/2));
+  const line=Math.round(fontPt*20*1.2),before=spacingBefore===undefined?Math.max(0,Math.round(y*pageHeight-line/2)):Math.max(0,spacingBefore);
+  const breakXml=pageBreak?'<w:pageBreakBefore/>':'';
+  return '<w:p><w:pPr>'+breakXml+'<w:spacing w:before="'+before+'" w:after="0" w:line="'+line+'" w:lineRule="exact"/><w:ind w:left="'+left+'" w:right="'+right+'"/><w:jc w:val="center"/></w:pPr><w:r><w:rPr><w:rFonts w:ascii="'+escapeXml(fontName)+'" w:hAnsi="'+escapeXml(fontName)+'"/><w:b/><w:sz w:val="'+Math.round(fontPt*2)+'"/></w:rPr><w:t xml:space="preserve">'+escapeXml(text)+'</w:t></w:r></w:p>'
+}
+async function downloadWord(){
+  people=parsePeople();
+  if(!imageObj){setStatus('Muat naik gambar sijil dahulu.','err');return}
+  if(!people.length){setStatus('Masukkan sekurang-kurangnya satu nama.','err');return}
+  if(!positions.name){setStatus('Tetapkan ruang nama dahulu sebelum jana Word.','err');return}
+  const btn=$('#wordBtn');btn.disabled=true;btn.textContent='Menyediakan Word…';setStatus('Sedang menyediakan dokumen Word boleh edit…');
+  try{
+    const JSZip=await loadZipLibrary(),zip=new JSZip(),portrait=$('#paper').value==='a4p';
+    const pageW=portrait?11906:16838,pageH=portrait?16838:11906;
+    let body='';
+    people.forEach((person,index)=>{
+      const fields=[{text:person.name,pos:positions.name,font:parseInt($('#fontSize').value,10),family:$('#nameFont').selectedOptions[0].textContent}];
+      if(positions.ic&&person.ic)fields.push({text:person.ic,pos:positions.ic,font:parseInt($('#icFontSize').value,10),family:$('#icFont').selectedOptions[0].textContent});
+      fields.sort((a,b)=>a.pos.y-b.pos.y);
+      let priorY=0,priorLine=0;
+      fields.forEach((field,j)=>{
+        const line=Math.round(field.font*20*1.2);
+        const yTwips=Math.round(field.pos.y*pageH);
+        const before=j===0?Math.max(0,yTwips-Math.round(line/2)):Math.max(0,yTwips-priorY-priorLine);
+        body+=makeWordParagraph(field.text,field.pos.x,field.pos.y,field.font,field.family,pageW,pageH,index>0&&j===0,before);
+        priorY=yTwips;priorLine=line
+      });
+    });
+    const doc='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+body+'<w:sectPr><w:pgSz w:w="'+pageW+'" w:h="'+pageH+'"'+(portrait?'':' w:orient="landscape"')+'/><w:pgMar w:top="0" w:right="0" w:bottom="0" w:left="0" w:header="0" w:footer="0" w:gutter="0"/></w:sectPr></w:body></w:document>';
+    const types='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>';
+    const rels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>';
+    zip.file('[Content_Types].xml',types);zip.folder('_rels').file('.rels',rels);zip.folder('word').file('document.xml',doc);
+    const blob=await zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
+    const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='SijilSiap_Boleh_Edit.docx';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+    setStatus('Dokumen Word siap: '+people.length+' halaman, nama dan IC boleh diedit.','good')
+  }catch(err){setStatus('Word belum dapat dijana. Semak sambungan internet dan cuba lagi.','err')}
+  finally{btn.disabled=false;btn.textContent='Muat turun Word'}
+}
+$('#wordBtn').addEventListener('click',downloadWord);
+
+$('#printBtn').onclick=()=>{people=parsePeople();if(!imageObj){setStatus('Muat naik imbasan sijil dahulu.','err');return}if(!people.length){setStatus('Masukkan sekurang-kurangnya satu nama.','err');return}if(!positions.name){setStatus('Tetapkan ruang nama dahulu dengan klik pada pratonton.','err');return}const root=$('#printroot');root.innerHTML='';const isPortrait=$('#paper').value==='a4p';document.documentElement.style.setProperty('--page-w',isPortrait?'210mm':'297mm');document.documentElement.style.setProperty('--page-h',isPortrait?'297mm':'210mm');let style=document.getElementById('dynamicPrint');if(!style){style=document.createElement('style');style.id='dynamicPrint';document.head.appendChild(style)}style.textContent='@media print{@page{size:A4 '+(isPortrait?'portrait':'landscape')+';margin:0}.printpage{width:'+(isPortrait?'210mm':'297mm')+';height:'+(isPortrait?'297mm':'210mm')+'}}';people.forEach(p=>{const page=document.createElement('div');page.className='printpage';if(positions.name){const n=document.createElement('div');n.className='printtext';n.textContent=p.name;n.style.left=positions.name.x*100+'%';n.style.top=positions.name.y*100+'%';n.style.fontSize=parseInt($('#fontSize').value,10)+'pt';n.style.fontFamily=$('#nameFont').value;page.appendChild(n)}if(positions.ic&&p.ic){const ic=document.createElement('div');ic.className='printtext';ic.textContent=p.ic;ic.style.left=positions.ic.x*100+'%';ic.style.top=positions.ic.y*100+'%';ic.style.fontSize=parseInt($('#icFontSize').value,10)+'pt';ic.style.fontFamily=$('#icFont').value;page.appendChild(ic)}root.appendChild(page)});setStatus(people.length+' halaman disediakan. Dalam dialog cetak, pilih skala 100% dan matikan header/footer.','good');window.print()};
+</script>
+</body>
+</html>
