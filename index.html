@@ -121,7 +121,7 @@ Kumar a/l Rajan	080821-10-5678"></textarea>
         <div class="tablewrap"><table><thead><tr><th>#</th><th>Nama</th><th>No. IC</th></tr></thead><tbody id="tbody"><tr><td colspan="3" style="text-align:center;color:#9b8d8f;padding:20px">Senarai penerima akan dipaparkan di sini.</td></tr></tbody></table></div>
         <div class="hr"></div>
         <div class="cardhead" style="padding:0 0 11px;border:0"><span class="num">03</span><div><h3>Semak dan cetak</h3><small>Setiap penerima satu halaman; pilihan Word boleh diedit sebelum cetak.</small></div></div>
-        <div class="generate"><button id="previewBtn" class="btnlight">Lihat pratonton A4</button><button id="wordBtn" class="btnlight">Muat turun Word</button><button id="printBtn">Cetak sijil pukal　↗</button></div>
+        <div class="generate"><button id="previewBtn" class="btnlight">Lihat pratonton A4</button><button id="wordBtn" class="btnlight">Word (nama + IC sahaja)</button><button id="printBtn">Cetak sijil pukal　↗</button></div>
         <div class="micro">Cadangan automatik hanyalah panduan. Semak pratonton dan buat cetakan percubaan atas kertas biasa sebelum menggunakan sijil sebenar.</div>
       </div>
     </section>
@@ -364,7 +364,7 @@ async function downloadWord(){
     const rels='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>';
     zip.file('[Content_Types].xml',types);zip.folder('_rels').file('.rels',rels);zip.folder('word').file('document.xml',doc);
     const blob=await zip.generateAsync({type:'blob',mimeType:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});
-    const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='SijilSiap_Boleh_Edit.docx';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+    const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='SijilSiap_Nama_IC_Sahaja.docx';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
     setStatus('Dokumen Word siap: '+people.length+' halaman, mengandungi nama dan IC sahaja. Margin 2.54 cm; nama menggunakan seluruh lebar ruang teks.','good')
   }catch(err){setStatus('Word belum dapat dijana. Semak sambungan internet dan cuba lagi.','err')}
   finally{btn.disabled=false;btn.textContent='Muat turun Word'}
